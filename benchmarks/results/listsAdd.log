@@ -1,0 +1,355 @@
+tcook@poseidon ~/IdeaProjects/HonoursProject/benchmarks$ java -jar target/benchmarks.jar ListAddBenchmark -f 1                                  ✹ ✭master 
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.openjdk.jmh.util.Utils (file:/Users/tcook/IdeaProjects/HonoursProject/benchmarks/target/benchmarks.jar) to method java.io.Console.encoding()
+WARNING: Please consider reporting this to the maintainers of org.openjdk.jmh.util.Utils
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+# JMH version: 1.32
+# VM version: JDK 11.0.11, OpenJDK 64-Bit Server VM, 11.0.11+9
+# VM invoker: /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint
+# Warmup: 5 iterations, 5 s each
+# Measurement: 5 iterations, 5 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.arrayListBenchmark
+# Parameters: (elementCount = 10)
+
+# Run progress: 0.00% complete, ETA 00:08:20
+# Fork: 1 of 1
+# Warmup Iteration   1: 10177.507 ops/ms
+# Warmup Iteration   2: 10944.664 ops/ms
+# Warmup Iteration   3: 11490.554 ops/ms
+# Warmup Iteration   4: 11274.227 ops/ms
+# Warmup Iteration   5: 11398.939 ops/ms
+Iteration   1: 11470.862 ops/ms
+Iteration   2: 11511.127 ops/ms
+Iteration   3: 11398.252 ops/ms
+Iteration   4: 11524.197 ops/ms
+Iteration   5: 11523.335 ops/ms
+
+
+Result "dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.arrayListBenchmark":
+  11485.555 ±(99.9%) 205.677 ops/ms [Average]
+  (min, avg, max) = (11398.252, 11485.555, 11524.197), stdev = 53.414
+  CI (99.9%): [11279.878, 11691.231] (assumes normal distribution)
+
+
+# JMH version: 1.32
+# VM version: JDK 11.0.11, OpenJDK 64-Bit Server VM, 11.0.11+9
+# VM invoker: /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint
+# Warmup: 5 iterations, 5 s each
+# Measurement: 5 iterations, 5 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.arrayListBenchmark
+# Parameters: (elementCount = 100)
+
+# Run progress: 10.00% complete, ETA 00:07:33
+# Fork: 1 of 1
+# Warmup Iteration   1: 1606.415 ops/ms
+# Warmup Iteration   2: 1536.711 ops/ms
+# Warmup Iteration   3: 1598.395 ops/ms
+# Warmup Iteration   4: 1583.069 ops/ms
+# Warmup Iteration   5: 1589.130 ops/ms
+Iteration   1: 1593.544 ops/ms
+Iteration   2: 1600.442 ops/ms
+Iteration   3: 1439.357 ops/ms
+Iteration   4: 1434.168 ops/ms
+Iteration   5: 1435.526 ops/ms
+
+
+Result "dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.arrayListBenchmark":
+  1500.607 ±(99.9%) 339.017 ops/ms [Average]
+  (min, avg, max) = (1434.168, 1500.607, 1600.442), stdev = 88.042
+  CI (99.9%): [1161.590, 1839.625] (assumes normal distribution)
+
+
+# JMH version: 1.32
+# VM version: JDK 11.0.11, OpenJDK 64-Bit Server VM, 11.0.11+9
+# VM invoker: /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint
+# Warmup: 5 iterations, 5 s each
+# Measurement: 5 iterations, 5 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.arrayListBenchmark
+# Parameters: (elementCount = 1000)
+
+# Run progress: 20.00% complete, ETA 00:06:43
+# Fork: 1 of 1
+# Warmup Iteration   1: 139.242 ops/ms
+# Warmup Iteration   2: 148.503 ops/ms
+# Warmup Iteration   3: 150.553 ops/ms
+# Warmup Iteration   4: 147.590 ops/ms
+# Warmup Iteration   5: 150.885 ops/ms
+Iteration   1: 154.650 ops/ms
+Iteration   2: 155.526 ops/ms
+Iteration   3: 155.800 ops/ms
+Iteration   4: 155.664 ops/ms
+Iteration   5: 156.525 ops/ms
+
+
+Result "dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.arrayListBenchmark":
+  155.633 ±(99.9%) 2.586 ops/ms [Average]
+  (min, avg, max) = (154.650, 155.633, 156.525), stdev = 0.672
+  CI (99.9%): [153.047, 158.219] (assumes normal distribution)
+
+
+# JMH version: 1.32
+# VM version: JDK 11.0.11, OpenJDK 64-Bit Server VM, 11.0.11+9
+# VM invoker: /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint
+# Warmup: 5 iterations, 5 s each
+# Measurement: 5 iterations, 5 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.arrayListBenchmark
+# Parameters: (elementCount = 10000)
+
+# Run progress: 30.00% complete, ETA 00:05:52
+# Fork: 1 of 1
+# Warmup Iteration   1: 17.779 ops/ms
+# Warmup Iteration   2: 15.181 ops/ms
+# Warmup Iteration   3: 14.845 ops/ms
+# Warmup Iteration   4: 15.018 ops/ms
+# Warmup Iteration   5: 14.981 ops/ms
+Iteration   1: 15.027 ops/ms
+Iteration   2: 14.971 ops/ms
+Iteration   3: 15.051 ops/ms
+Iteration   4: 15.170 ops/ms
+Iteration   5: 15.108 ops/ms
+
+
+Result "dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.arrayListBenchmark":
+  15.066 ±(99.9%) 0.294 ops/ms [Average]
+  (min, avg, max) = (14.971, 15.066, 15.170), stdev = 0.076
+  CI (99.9%): [14.772, 15.359] (assumes normal distribution)
+
+
+# JMH version: 1.32
+# VM version: JDK 11.0.11, OpenJDK 64-Bit Server VM, 11.0.11+9
+# VM invoker: /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint
+# Warmup: 5 iterations, 5 s each
+# Measurement: 5 iterations, 5 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.arrayListBenchmark
+# Parameters: (elementCount = 100000)
+
+# Run progress: 40.00% complete, ETA 00:05:02
+# Fork: 1 of 1
+# Warmup Iteration   1: 2.315 ops/ms
+# Warmup Iteration   2: 2.418 ops/ms
+# Warmup Iteration   3: 2.425 ops/ms
+# Warmup Iteration   4: 2.438 ops/ms
+# Warmup Iteration   5: 2.402 ops/ms
+Iteration   1: 2.394 ops/ms
+Iteration   2: 2.431 ops/ms
+Iteration   3: 2.437 ops/ms
+Iteration   4: 2.183 ops/ms
+Iteration   5: 1.575 ops/ms
+
+
+Result "dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.arrayListBenchmark":
+  2.204 ±(99.9%) 1.412 ops/ms [Average]
+  (min, avg, max) = (1.575, 2.204, 2.437), stdev = 0.367
+  CI (99.9%): [0.792, 3.616] (assumes normal distribution)
+
+
+# JMH version: 1.32
+# VM version: JDK 11.0.11, OpenJDK 64-Bit Server VM, 11.0.11+9
+# VM invoker: /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint
+# Warmup: 5 iterations, 5 s each
+# Measurement: 5 iterations, 5 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.linkedListBenchmark
+# Parameters: (elementCount = 10)
+
+# Run progress: 50.00% complete, ETA 00:04:11
+# Fork: 1 of 1
+# Warmup Iteration   1: 11626.956 ops/ms
+# Warmup Iteration   2: 11701.064 ops/ms
+# Warmup Iteration   3: 11957.510 ops/ms
+# Warmup Iteration   4: 12664.047 ops/ms
+# Warmup Iteration   5: 12592.588 ops/ms
+Iteration   1: 12511.207 ops/ms
+Iteration   2: 12497.200 ops/ms
+Iteration   3: 12513.687 ops/ms
+Iteration   4: 12673.983 ops/ms
+Iteration   5: 12725.650 ops/ms
+
+
+Result "dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.linkedListBenchmark":
+  12584.345 ±(99.9%) 412.657 ops/ms [Average]
+  (min, avg, max) = (12497.200, 12584.345, 12725.650), stdev = 107.166
+  CI (99.9%): [12171.688, 12997.003] (assumes normal distribution)
+
+
+# JMH version: 1.32
+# VM version: JDK 11.0.11, OpenJDK 64-Bit Server VM, 11.0.11+9
+# VM invoker: /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint
+# Warmup: 5 iterations, 5 s each
+# Measurement: 5 iterations, 5 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.linkedListBenchmark
+# Parameters: (elementCount = 100)
+
+# Run progress: 60.00% complete, ETA 00:03:21
+# Fork: 1 of 1
+# Warmup Iteration   1: 1581.858 ops/ms
+# Warmup Iteration   2: 1695.444 ops/ms
+# Warmup Iteration   3: 2237.348 ops/ms
+# Warmup Iteration   4: 2196.765 ops/ms
+# Warmup Iteration   5: 2259.026 ops/ms
+Iteration   1: 2245.943 ops/ms
+Iteration   2: 2268.647 ops/ms
+Iteration   3: 2248.799 ops/ms
+Iteration   4: 2166.632 ops/ms
+Iteration   5: 2246.637 ops/ms
+
+
+Result "dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.linkedListBenchmark":
+  2235.332 ±(99.9%) 152.227 ops/ms [Average]
+  (min, avg, max) = (2166.632, 2235.332, 2268.647), stdev = 39.533
+  CI (99.9%): [2083.105, 2387.559] (assumes normal distribution)
+
+
+# JMH version: 1.32
+# VM version: JDK 11.0.11, OpenJDK 64-Bit Server VM, 11.0.11+9
+# VM invoker: /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint
+# Warmup: 5 iterations, 5 s each
+# Measurement: 5 iterations, 5 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.linkedListBenchmark
+# Parameters: (elementCount = 1000)
+
+# Run progress: 70.00% complete, ETA 00:02:31
+# Fork: 1 of 1
+# Warmup Iteration   1: 159.284 ops/ms
+# Warmup Iteration   2: 170.698 ops/ms
+# Warmup Iteration   3: 164.235 ops/ms
+# Warmup Iteration   4: 163.843 ops/ms
+# Warmup Iteration   5: 161.941 ops/ms
+Iteration   1: 160.898 ops/ms
+Iteration   2: 164.149 ops/ms
+Iteration   3: 163.292 ops/ms
+Iteration   4: 161.208 ops/ms
+Iteration   5: 163.830 ops/ms
+
+
+Result "dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.linkedListBenchmark":
+  162.675 ±(99.9%) 5.839 ops/ms [Average]
+  (min, avg, max) = (160.898, 162.675, 164.149), stdev = 1.516
+  CI (99.9%): [156.836, 168.514] (assumes normal distribution)
+
+
+# JMH version: 1.32
+# VM version: JDK 11.0.11, OpenJDK 64-Bit Server VM, 11.0.11+9
+# VM invoker: /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint
+# Warmup: 5 iterations, 5 s each
+# Measurement: 5 iterations, 5 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.linkedListBenchmark
+# Parameters: (elementCount = 10000)
+
+# Run progress: 80.00% complete, ETA 00:01:40
+# Fork: 1 of 1
+# Warmup Iteration   1: 15.939 ops/ms
+# Warmup Iteration   2: 16.989 ops/ms
+# Warmup Iteration   3: 13.414 ops/ms
+# Warmup Iteration   4: 12.977 ops/ms
+# Warmup Iteration   5: 12.160 ops/ms
+Iteration   1: 13.507 ops/ms
+Iteration   2: 13.538 ops/ms
+Iteration   3: 13.143 ops/ms
+Iteration   4: 12.676 ops/ms
+Iteration   5: 13.528 ops/ms
+
+
+Result "dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.linkedListBenchmark":
+  13.278 ±(99.9%) 1.444 ops/ms [Average]
+  (min, avg, max) = (12.676, 13.278, 13.538), stdev = 0.375
+  CI (99.9%): [11.834, 14.722] (assumes normal distribution)
+
+
+# JMH version: 1.32
+# VM version: JDK 11.0.11, OpenJDK 64-Bit Server VM, 11.0.11+9
+# VM invoker: /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin/java
+# VM options: <none>
+# Blackhole mode: full + dont-inline hint
+# Warmup: 5 iterations, 5 s each
+# Measurement: 5 iterations, 5 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.linkedListBenchmark
+# Parameters: (elementCount = 100000)
+
+# Run progress: 90.00% complete, ETA 00:00:50
+# Fork: 1 of 1
+# Warmup Iteration   1: 1.078 ops/ms
+# Warmup Iteration   2: 1.447 ops/ms
+# Warmup Iteration   3: 1.569 ops/ms
+# Warmup Iteration   4: 1.589 ops/ms
+# Warmup Iteration   5: 1.455 ops/ms
+Iteration   1: 1.604 ops/ms
+Iteration   2: 1.559 ops/ms
+Iteration   3: 1.467 ops/ms
+Iteration   4: 1.612 ops/ms
+Iteration   5: 1.503 ops/ms
+
+
+Result "dev.tobycook.benchmarks.collections.lists.ListAddBenchmark.linkedListBenchmark":
+  1.549 ±(99.9%) 0.244 ops/ms [Average]
+  (min, avg, max) = (1.467, 1.549, 1.612), stdev = 0.063
+  CI (99.9%): [1.305, 1.793] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:08:23
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                             (elementCount)   Mode  Cnt      Score     Error   Units
+ListAddBenchmark.arrayListBenchmark               10  thrpt    5  11485.555 ± 205.677  ops/ms
+ListAddBenchmark.arrayListBenchmark              100  thrpt    5   1500.607 ± 339.017  ops/ms
+ListAddBenchmark.arrayListBenchmark             1000  thrpt    5    155.633 ±   2.586  ops/ms
+ListAddBenchmark.arrayListBenchmark            10000  thrpt    5     15.066 ±   0.294  ops/ms
+ListAddBenchmark.arrayListBenchmark           100000  thrpt    5      2.204 ±   1.412  ops/ms
+ListAddBenchmark.linkedListBenchmark              10  thrpt    5  12584.345 ± 412.657  ops/ms
+ListAddBenchmark.linkedListBenchmark             100  thrpt    5   2235.332 ± 152.227  ops/ms
+ListAddBenchmark.linkedListBenchmark            1000  thrpt    5    162.675 ±   5.839  ops/ms
+ListAddBenchmark.linkedListBenchmark           10000  thrpt    5     13.278 ±   1.444  ops/ms
+ListAddBenchmark.linkedListBenchmark          100000  thrpt    5      1.549 ±   0.244  ops/ms
