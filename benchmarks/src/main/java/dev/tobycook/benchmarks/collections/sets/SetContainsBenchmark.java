@@ -1,6 +1,5 @@
 package dev.tobycook.benchmarks.collections.sets;
 
-import dev.tobycook.benchmarks.collections.lists.ListAddBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Level;
@@ -12,9 +11,6 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -26,15 +22,6 @@ import java.util.concurrent.TimeUnit;
 @Measurement(iterations = 5, time = 5)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class SetContainsBenchmark {
-
-    public static void main(String[] args) throws Exception {
-        Options opt = new OptionsBuilder()
-                .include(ListAddBenchmark.class.getSimpleName())
-                .forks(1)
-                .build();
-
-        new Runner(opt).run();
-    }
 
     @State(Scope.Benchmark)
     public static class SetClass {
