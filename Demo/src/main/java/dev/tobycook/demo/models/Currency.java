@@ -1,15 +1,20 @@
 package dev.tobycook.demo.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 
+@Table(schema = "sales", name = "currency")
 @Entity
 public class Currency {
 
     @Id
+    @Column(name = "currencycode")
     private String currencyCode;
     private String name;
+    @Column(name = "modifieddate")
     private Timestamp modifiedDate;
 
     public String getCurrencyCode() {

@@ -9,12 +9,13 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>dev.tobycook</groupId>
-    <artifactId>HonoursProjectDemo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>adventure_works</artifactId>
+    <version>0.0.1</version>
     <name>Honours Project Demo</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
+        <exec.mainClass>dev.tobycook.demo.HonoursProjectDemoApplication</exec.mainClass>
     </properties>
     <dependencies>
 
