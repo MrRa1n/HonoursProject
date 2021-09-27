@@ -1,6 +1,6 @@
 package dev.tobycook.demo.repository;
 
-import dev.tobycook.demo.models.Currency;
+import dev.tobycook.demo.models.sales.Currency;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
