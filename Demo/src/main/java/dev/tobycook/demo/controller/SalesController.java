@@ -1,6 +1,6 @@
 package dev.tobycook.demo.controller;
 
-import dev.tobycook.demo.models.Currency;
+import dev.tobycook.demo.models.sales.Currency;
 import dev.tobycook.demo.service.SalesService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
