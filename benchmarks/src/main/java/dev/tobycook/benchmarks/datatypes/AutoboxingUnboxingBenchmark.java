@@ -17,63 +17,59 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@State(Scope.Benchmark)
 @BenchmarkMode(Mode.Throughput)
 @Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 5, time = 5)
+@Measurement(iterations = 10, time = 5)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class AutoboxingUnboxingBenchmark {
 
-    @State(Scope.Benchmark)
-    public static class BoxingState {
+    public int[] primitivesArr;
+    public List<Integer> boxedPrimitivesList;
 
-        public int[] primitivesArr;
-        public List<Integer> boxedPrimitivesList;
+    public int[] emptyPrimitivesArr;
+    public List<Integer> emptyBoxedPrimitivesList;
 
-        public Integer[] emptyPrimitivesArr;
-        public List<Integer> emptyBoxedPrimitivesList;
+    @Param({"1000","100000","1000000"})
+    public int iterations;
 
-        @Param({"10","100","1000","10000","100000"})
-        public int iterations;
+    static final int UNBOXED_INT = 123;
+    static final Integer BOXED_INT = 123;
 
-        @Setup(Level.Invocation)
-        public void setup() {
-            primitivesArr = new int[iterations];
-            boxedPrimitivesList = new ArrayList<>();
-            for (var i = 0; i < iterations; i++) {
-                primitivesArr[i] = i;
-                boxedPrimitivesList.add(i);
-            }
+    @Setup(Level.Invocation)
+    public void setup() {
+        primitivesArr = new int[iterations];
+        boxedPrimitivesList = new ArrayList<>();
+
+        emptyPrimitivesArr = new int[iterations];
+        emptyBoxedPrimitivesList = new ArrayList<>();
+
+        for (int i = 0; i < iterations; i++) {
+            primitivesArr[i] = i;
+            boxedPrimitivesList.add(i);
         }
     }
 
     @Benchmark
-    public void primitiveIntegerGetBenchmark(BoxingState state, Blackhole bh) {
-        int value = state.primitivesArr[state.iterations-1];
+    public void primitiveIntegerGetBenchmark(Blackhole bh) {
+        int value = primitivesArr[iterations/2];
         bh.consume(value);
     }
 
     @Benchmark
-    public void boxedPrimitiveIntegerGetBenchmark(BoxingState state, Blackhole bh) {
-        int value = state.boxedPrimitivesList.get(state.iterations-1);
+    public void boxedPrimitiveIntegerGetBenchmark(Blackhole bh) {
+        int value = boxedPrimitivesList.get(iterations/2);
         bh.consume(value);
     }
 
     @Benchmark
-    public void primitiveIntegerAddBenchmark(BoxingState state, Blackhole bh) {
-        state.emptyBoxedPrimitivesList = new ArrayList<>();
-        for (var i = 0; i < state.iterations; i++) {
-            state.emptyBoxedPrimitivesList.add(i);
-        }
-        bh.consume(state.emptyBoxedPrimitivesList);
+    public boolean primitiveIntegerAddBenchmark() {
+        return emptyBoxedPrimitivesList.add(UNBOXED_INT);
     }
 
     @Benchmark
-    public void boxedPrimitiveAddBenchmark(BoxingState state, Blackhole bh) {
-        state.emptyBoxedPrimitivesList = new ArrayList<>();
-        for (int i = 0; i < state.iterations; i++) {
-            state.emptyBoxedPrimitivesList.add(Integer.valueOf(i));
-        }
-        bh.consume(state.emptyBoxedPrimitivesList);
+    public boolean boxedPrimitiveAddBenchmark() {
+        return emptyBoxedPrimitivesList.add(BOXED_INT);
     }
 
 

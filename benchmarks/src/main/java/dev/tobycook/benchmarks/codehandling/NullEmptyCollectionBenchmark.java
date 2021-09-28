@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 @State(Scope.Benchmark)
 @BenchmarkMode(Mode.Throughput)
-@Warmup(iterations = 10, time = 5)
+@Warmup(iterations = 5, time = 5)
 @Measurement(iterations = 10, time = 5)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class NullEmptyCollectionBenchmark {

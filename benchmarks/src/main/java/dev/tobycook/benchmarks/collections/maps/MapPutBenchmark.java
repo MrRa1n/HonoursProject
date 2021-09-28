@@ -14,56 +14,49 @@ import org.openjdk.jmh.annotations.Warmup;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
-@BenchmarkMode(Mode.Throughput)
+@State(Scope.Benchmark)
+@BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 5, time = 5)
+@Measurement(iterations = 10, time = 5)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class MapPutBenchmark {
 
-    @State(Scope.Benchmark)
-    public static class MapClass {
 
-        @Param({"10", "100", "1000", "10000", "100000"})
-        public int elementCount;
+    @Param({"1000","100000","1000000"})
+    public int elementCount;
 
-        public HashMap<String, Integer> hashMap;
-        public LinkedHashMap<String, Integer> linkedHashMap;
-        public TreeMap<String, Integer> treeMap;
+    Map<String, Integer> hashMap, linkedHashMap, treeMap;
 
-        @Setup(Level.Invocation)
-        public void setup() {
-            hashMap = new HashMap<>();
-            linkedHashMap = new LinkedHashMap<>();
-            treeMap = new TreeMap<>();
-        }
+    String key;
+    int value;
+
+    @Setup(Level.Invocation)
+    public void setup() {
+        hashMap = new HashMap<>();
+        linkedHashMap = new LinkedHashMap<>();
+        treeMap = new TreeMap<>();
+        key = "key" + elementCount / 2;
+        value = 0;
     }
 
     // TODO: Add benchmarks with varying loadFactor and initialCapacity
 
     @Benchmark
-    public HashMap<String, Integer> hashMapBenchmark(MapContainsKeyBenchmark.MapClass mapClass) {
-        for (var i = 0; i < mapClass.elementCount; i++) {
-            mapClass.hashMap.put("key" + i, i);
-        }
-        return mapClass.hashMap;
+    public Integer hashMapBenchmark() {
+        return hashMap.put(key, value);
     }
 
     @Benchmark
-    public LinkedHashMap<String, Integer> linkedHashMapBenchmark(MapContainsKeyBenchmark.MapClass mapClass) {
-        for (var i = 0; i < mapClass.elementCount; i++) {
-            mapClass.linkedHashMap.put("key" + i, i);
-        }
-        return mapClass.linkedHashMap;
+    public Integer linkedHashMapBenchmark() {
+        return linkedHashMap.put(key, value);
     }
 
     @Benchmark
-    public TreeMap<String, Integer> treeMapBenchmark(MapContainsKeyBenchmark.MapClass mapClass) {
-        for (var i = 0; i < mapClass.elementCount; i++) {
-            mapClass.treeMap.put("key" + i, i);
-        }
-        return mapClass.treeMap;
+    public Integer treeMapBenchmark() {
+        return treeMap.put(key, value);
     }
 }

@@ -2,20 +2,10 @@ package dev.tobycook.benchmarks.helpers;
 
 public class PersonFinaliser {
 
-    private final String name;
     private int age;
 
-    public PersonFinaliser(String name, int age) {
-        this.name = name;
+    public PersonFinaliser(int age) {
         this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
     }
 
     @Override

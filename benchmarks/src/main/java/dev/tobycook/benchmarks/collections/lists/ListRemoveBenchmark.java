@@ -17,57 +17,37 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@BenchmarkMode(Mode.Throughput)
+@State(Scope.Benchmark)
+@BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 5, time = 5)
+@Measurement(iterations = 10, time = 5)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class ListRemoveBenchmark {
 
-    @State(Scope.Benchmark)
-    public static class ArrayListClass {
-        public List<Integer> list;
+    List<Integer> arrayList, linkedList;
 
-        @Param({"10", "100", "1000", "10000", "100000"})
-        public int elementCount;
+    @Param({"1000","100000","1000000"})
+    public int elementCount;
 
-        @Setup(Level.Invocation)
-        public void setup() {
-            list = new ArrayList<>();
-            for (var i = 0; i < elementCount; i++) {
-                list.add(i);
-            }
-        }
-    }
+    static final int DENOMINATOR = 2;
 
-    @State(Scope.Benchmark)
-    public static class LinkedListClass {
-        public List<Integer> list;
-
-        @Param({"10", "100", "1000", "10000", "100000"})
-        public int elementCount;
-
-        @Setup(Level.Invocation)
-        public void setup() {
-            list = new LinkedList<>();
-            for (var i = 0; i < elementCount; i++) {
-                list.add(i);
-            }
+    @Setup(Level.Invocation)
+    public void setup() {
+        arrayList = new ArrayList<>();
+        linkedList = new LinkedList<>();
+        for (var i = 0; i < elementCount; i++) {
+            arrayList.add(i);
+            linkedList.add(i);
         }
     }
 
     @Benchmark
-    public List<Integer> arrayListBenchmark(ArrayListClass arrayList) {
-        for (var i = arrayList.list.size() - 1; i > 0; i--) {
-            arrayList.list.remove(i);
-        }
-        return arrayList.list;
+    public int arrayListBenchmark() {
+        return arrayList.remove(elementCount/DENOMINATOR);
     }
 
     @Benchmark
-    public List<Integer> linkedListBenchmark(LinkedListClass linkedList) {
-        for (var i = linkedList.list.size() - 1; i > 0; i--) {
-            linkedList.list.remove(i);
-        }
-        return linkedList.list;
+    public int linkedListBenchmark() {
+        return linkedList.remove(elementCount/DENOMINATOR);
     }
 }

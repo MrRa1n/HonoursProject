@@ -7,7 +7,6 @@ import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
@@ -15,33 +14,36 @@ import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.concurrent.TimeUnit;
 
-@BenchmarkMode(Mode.Throughput)
+
+/**
+ * Benchmark has strange behaviour. Timing increases exponentially when running
+ * personFinaliserBenchmark(), causing java.lang.OutOfMemoryError
+ */
+
+@State(Scope.Benchmark)
+@BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 5, time = 5)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@Measurement(iterations = 10, time = 5)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class FinaliserBenchmark {
 
-    @State(Scope.Benchmark)
-    public static class FinaliserState {
-        @Param({"10","100","1000","10000","100000"})
-        public int iterations;
+    static final int AGE = 18;
+
+    Person personNoFinaliser() {
+        return new Person(AGE);
+    }
+
+    PersonFinaliser personFinaliser() {
+        return new PersonFinaliser(AGE);
     }
 
     @Benchmark
-    public void personFinaliserBenchmark(FinaliserState state, Blackhole bh) {
-        for (var i = 0; i < state.iterations; i++) {
-            var person = new PersonFinaliser("Toby", 24);
-            String name = person.getName();
-            bh.consume(name);
-        }
+    public void personBenchmark(Blackhole bh) {
+        bh.consume(personNoFinaliser());
     }
 
     @Benchmark
-    public void personBenchmark(FinaliserState state, Blackhole bh) {
-        for (var i = 0; i < state.iterations; i++) {
-            var person = new Person("Toby", 24);
-            String name = person.getName();
-            bh.consume(name);
-        }
+    public void personFinaliserBenchmark(Blackhole bh) {
+        bh.consume(personFinaliser());
     }
 }

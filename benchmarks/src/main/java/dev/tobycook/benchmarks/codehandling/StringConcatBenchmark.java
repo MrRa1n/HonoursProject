@@ -2,68 +2,60 @@ package dev.tobycook.benchmarks.codehandling;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
-import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.concurrent.TimeUnit;
 
+
+/**
+ * This benchmark measures the throughput of appending a string in a loop
+ * using concatenation vs StringBuilder.append().
+ *
+ * @author Toby Cook
+ *
+ */
+@State(Scope.Benchmark)
 @BenchmarkMode(Mode.Throughput)
 @Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 5, time = 5)
+@Measurement(iterations = 10, time = 5)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class StringConcatBenchmark {
 
-    @State(Scope.Benchmark)
-    public static class StringState {
+    final String stringValue = "Hello, world!";
 
-        public String textToAppend;
-
-        @Param({"10","100","1000","10000","100000"})
-        public int iterations;
-
-        @Setup(Level.Invocation)
-        public void setup() {
-            textToAppend = "SillyGoose";
-        }
-    }
+    @Param({"1000","10000","100000"})
+    public int iterations;
 
     @Benchmark
-    public void stringConcatenationBenchmark(StringState state, Blackhole bh) {
+    public String stringConcatenationBenchmark() {
         String temp = "";
-        for (var i = 0; i < state.iterations; i++) {
-            temp += state.textToAppend;
+        for (int i = 0; i < iterations; i++) {
+            temp += stringValue;
         }
-        bh.consume(temp);
-        bh.consume(state);
+        return temp;
     }
 
     @Benchmark
-    public void stringBuilderBenchmark(StringState state, Blackhole bh) {
+    public String stringBuilderBenchmark() {
         var builder = new StringBuilder();
-        for (var i = 0; i < state.iterations; i++) {
-            builder.append(state.textToAppend);
+        for (int i = 0; i < iterations; i++) {
+            builder.append(stringValue);
         }
-        bh.consume(builder);
-        bh.consume(state);
+        return builder.toString();
     }
 
     @Benchmark
-    public void stringBuilderCapacityBenchmark(StringState state, Blackhole bh) {
-        var builder = new StringBuilder(state.textToAppend.length() * state.iterations);
-        for (var i = 0; i < state.iterations; i++) {
-            builder.append(state.textToAppend);
+    public String stringBuilderCapacityBenchmark() {
+        var builder = new StringBuilder(stringValue.length() * iterations);
+        for (int i = 0; i < iterations; i++) {
+            builder.append(stringValue);
         }
-        bh.consume(builder);
-        bh.consume(state);
+        return builder.toString();
     }
-
-
 }

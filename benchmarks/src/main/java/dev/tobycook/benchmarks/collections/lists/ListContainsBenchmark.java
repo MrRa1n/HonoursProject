@@ -17,57 +17,37 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@BenchmarkMode(Mode.Throughput)
+@State(Scope.Benchmark)
+@BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 5, time = 5)
+@Measurement(iterations = 10, time = 5)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class ListContainsBenchmark {
 
-    @State(Scope.Benchmark)
-    public static class ArrayListClass {
-        public List<Integer> list;
+    List<Integer> arrayList, linkedList;
 
-        @Param({"9","99","999","9999","99999"})
-        public int searchElement;
+    @Param({"1000","100000","1000000"})
+    int elementCount;
 
-        @Param({"10", "100", "1000", "10000", "100000"})
-        public int elementCount;
+    static final int DENOMINATOR = 2;
 
-        @Setup(Level.Invocation)
-        public void setup() {
-            list = new ArrayList<>();
-            for (int i = 0; i < elementCount; i++) {
-                list.add(i);
-            }
-        }
-    }
-
-    @State(Scope.Benchmark)
-    public static class LinkedListClass {
-        public List<Integer> list;
-
-        @Param({"9","99","999","9999","99999"})
-        public int searchElement;
-
-        @Param({"10", "100", "1000", "10000", "100000"})
-        public int elementCount;
-
-        @Setup(Level.Invocation)
-        public void setup() {
-            list = new LinkedList<>();
-            for (int i = 0; i < elementCount; i++) {
-                list.add(i);
-            }
+    @Setup(Level.Trial)
+    public void setup() {
+        arrayList = new ArrayList<>();
+        linkedList = new LinkedList<>();
+        for (int i = 0; i < elementCount; i++) {
+            arrayList.add(i);
+            linkedList.add(i);
         }
     }
 
     @Benchmark
-    public boolean arrayListBenchmark(ArrayListClass arrayList) {
-        return arrayList.list.contains(arrayList.searchElement);
+    public boolean arrayListBenchmark() {
+        return arrayList.contains(elementCount/DENOMINATOR);
     }
 
     @Benchmark
-    public boolean linkedListBenchmark(LinkedListClass linkedList) {
-        return linkedList.list.contains(linkedList.searchElement);
+    public boolean linkedListBenchmark() {
+        return linkedList.contains(elementCount/DENOMINATOR);
     }
 }

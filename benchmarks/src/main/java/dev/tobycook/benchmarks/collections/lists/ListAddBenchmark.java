@@ -6,7 +6,6 @@ import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
@@ -25,9 +24,10 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Toby Cook
  */
-@BenchmarkMode(Mode.Throughput)
+@State(Scope.Benchmark)
+@BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 5, time = 5)
+@Measurement(iterations = 10, time = 5)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class ListAddBenchmark {
 
@@ -35,49 +35,28 @@ public class ListAddBenchmark {
      * State holds variables that do not count towards benchmarks
      *
      **/
-    @State(Scope.Benchmark)
-    public static class ArrayListClass {
-        public List<Integer> list;
 
-        @Param({"10", "100", "1000", "10000", "100000"})
-        public int elementCount;
+    static final int NUMBER = 123;
 
-        /**
-         * Setup and values before benchmark is executed
-         */
-        @Setup(Level.Invocation)
-        public void setup() {
-            list = new ArrayList<>();
-        }
-    }
+    List<Integer> arrayList, linkedList;
 
-    @State(Scope.Benchmark)
-    public static class LinkedListClass {
-        public List<Integer> list;
-
-        @Param({"10", "100", "1000", "10000", "100000"})
-        public int elementCount;
-
-        @Setup(Level.Invocation)
-        public void setup() {
-            list = new LinkedList<>();
-        }
+    /**
+     * Setup and values before benchmark is executed
+     */
+    @Setup(Level.Trial)
+    public void setup() {
+        arrayList = new ArrayList<>();
+        linkedList = new LinkedList<>();
     }
 
     @Benchmark
-    public List<Integer> arrayListBenchmark(ArrayListClass arrayList) {
-        for (var i = 0; i < arrayList.elementCount; i++) {
-            arrayList.list.add(i);
-        }
-        return arrayList.list;
+    public boolean arrayListBenchmark() {
+        return arrayList.add(NUMBER);
     }
 
     @Benchmark
-    public List<Integer> linkedListBenchmark(LinkedListClass linkedList) {
-        for (var i = 0; i < linkedList.elementCount; i++) {
-            linkedList.list.add(i);
-        }
-        return linkedList.list;
+    public boolean linkedListBenchmark() {
+        return linkedList.add(NUMBER);
     }
 
 }

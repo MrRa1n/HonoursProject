@@ -18,63 +18,59 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@BenchmarkMode(Mode.Throughput)
+@State(Scope.Benchmark)
+@BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 5, time = 5)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@Measurement(iterations = 10, time = 5)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class LoopBenchmark {
 
-    @State(Scope.Benchmark)
-    public static class LoopState {
-        public List<Integer> data;
+    List<Integer> data;
 
-        @Param({"10","100","1000","10000","100000"})
-        public int iterations;
+    @Param({"1000","100000","1000000"})
+    public int iterations;
 
-        @Setup(Level.Invocation)
-        public void setup() {
-            data = new ArrayList<>();
-            for (var i = 0; i < iterations; i++) {
-                data.add(i);
-            }
+    @Setup(Level.Trial)
+    public void setup() {
+        data = new ArrayList<>();
+        for (int i = 0; i < iterations; i++) {
+            data.add(i);
         }
     }
 
     @Benchmark
-    public void iteratorBenchmark(LoopState state, Blackhole bh) {
-        var iterator = state.data.iterator();
+    public int iteratorBenchmark(Blackhole bh) {
+        var iterator = data.iterator();
         int number = 0;
         while (iterator.hasNext()) {
-            number = iterator.next();
+            number += iterator.next();
         }
-        bh.consume(number);
         bh.consume(iterator);
+        return number;
     }
 
     @Benchmark
-    public void foreachBenchmark(LoopState state, Blackhole bh) {
+    public int forEachBenchmark() {
         int number = 0;
-        for (Integer d : state.data) {
-            number = d;
+        for (Integer d : data) {
+            number += d;
         }
-        bh.consume(number);
+        return number;
     }
 
     @Benchmark
-    public void forBenchmark(LoopState state, Blackhole bh) {
+    public int forBenchmark() {
         int number = 0;
-        for (int i = 0; i < state.data.size(); i++) {
-            number = state.data.get(i);
+        for (int i = 0; i < data.size(); i++) {
+            number += data.get(i);
         }
-        bh.consume(number);
+        return number;
     }
 
     @Benchmark
-    public void streamForBenchmark(LoopState state, Blackhole bh) {
-        AtomicInteger number = new AtomicInteger();
-        state.data.stream().forEach(number::set);
-        bh.consume(number);
+    public int streamForEachBenchmark() {
+        var number = new AtomicInteger();
+        data.stream().forEach(number::set);
+        return number.get();
     }
-
-
 }

@@ -14,53 +14,51 @@ import org.openjdk.jmh.annotations.Warmup;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
-@BenchmarkMode(Mode.Throughput)
+@State(Scope.Benchmark)
+@BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 5, time = 5)
+@Measurement(iterations = 10, time = 5)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class SetContainsBenchmark {
 
-    @State(Scope.Benchmark)
-    public static class SetClass {
-        public HashSet<Integer> hashSet;
-        public LinkedHashSet<Integer> linkedHashSet;
-        public TreeSet<Integer> treeSet;
+    Set<Integer> hashSet, linkedHashSet, treeSet;
 
-        @Param({"9","99","999","9999","99999"})
-        public int searchElement;
+    @Param({"1000","100000","1000000"})
+    int elementCount;
 
-        @Param({"10", "100", "1000", "10000", "100000"})
-        public int elementCount;
+    int searchElement;
 
-        @Setup(Level.Invocation)
-        public void setup() {
-            hashSet = new HashSet<>();
-            linkedHashSet = new LinkedHashSet<>();
-            treeSet = new TreeSet<>();
+    @Setup(Level.Trial)
+    public void setup() {
+        hashSet = new HashSet<>();
+        linkedHashSet = new LinkedHashSet<>();
+        treeSet = new TreeSet<>();
+        searchElement = elementCount / 2;
 
-            for (var i = 0; i < elementCount; i++) {
-                hashSet.add(i);
-                linkedHashSet.add(i);
-                treeSet.add(i);
-            }
+        for (var i = 0; i < elementCount; i++) {
+            hashSet.add(i);
+            linkedHashSet.add(i);
+            treeSet.add(i);
         }
     }
 
+
     @Benchmark
-    public boolean hashSetBenchmark(SetClass setClass) {
-        return setClass.hashSet.contains(setClass.searchElement);
+    public boolean hashSetBenchmark() {
+        return hashSet.contains(searchElement);
     }
 
     @Benchmark
-    public boolean linkedHashSetBenchmark(SetClass setClass) {
-        return setClass.linkedHashSet.contains(setClass.searchElement);
+    public boolean linkedHashSetBenchmark() {
+        return linkedHashSet.contains(searchElement);
     }
 
     @Benchmark
-    public boolean treeSetBenchmark(SetClass setClass) {
-        return setClass.treeSet.contains(setClass.searchElement);
+    public boolean treeSetBenchmark() {
+        return treeSet.contains(searchElement);
     }
 }

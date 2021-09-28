@@ -14,60 +14,49 @@ import org.openjdk.jmh.annotations.Warmup;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
-@BenchmarkMode(Mode.Throughput)
+@State(Scope.Benchmark)
+@BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 5, time = 5)
+@Measurement(iterations = 10, time = 5)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class MapContainsValueBenchmark {
 
-    @State(Scope.Benchmark)
-    public static class MapClass {
+    @Param({"1000","100000","1000000"})
+    public int elementCount;
+    static final int DENOMINATOR = 2;
 
-        @Param({"9","99","999","9999","99999"})
-        public int searchElement;
+    Map<String, Integer> hashMap, linkedHashMap, treeMap;
 
-        @Param({"10", "100", "1000", "10000", "100000"})
-        public int elementCount;
+    @Setup(Level.Trial)
+    public void setup() {
+        hashMap = new HashMap<>();
+        linkedHashMap = new LinkedHashMap<>();
+        treeMap = new TreeMap<>();
 
-        public HashMap<String, Integer> hashMap;
-        public LinkedHashMap<String, Integer> linkedHashMap;
-        public TreeMap<String, Integer> treeMap;
-
-        @Setup(Level.Invocation)
-        public void setup() {
-            hashMap = new HashMap<>();
-            linkedHashMap = new LinkedHashMap<>();
-            treeMap = new TreeMap<>();
-
-            for (var i = 0; i < elementCount; i++) {
-                hashMap.put("key" + i, i);
-            }
-
-            for (var i = 0; i < elementCount; i++) {
-                linkedHashMap.put("key" + i, i);
-            }
-
-            for (var i = 0; i < elementCount; i++) {
-                treeMap.put("key" + i, i);
-            }
+        for (var i = 0; i < elementCount; i++) {
+            hashMap.put("key" + i, i);
+            linkedHashMap.put("key" + i, i);
+            treeMap.put("key" + i, i);
         }
     }
 
+
     @Benchmark
-    public boolean hashMapBenchmark(MapClass mapClass) {
-        return mapClass.hashMap.containsValue(mapClass.searchElement);
+    public boolean hashMapBenchmark() {
+        return hashMap.containsValue(elementCount/DENOMINATOR);
     }
 
     @Benchmark
-    public boolean linkedHashMapBenchmark(MapClass mapClass) {
-        return mapClass.linkedHashMap.containsValue(mapClass.searchElement);
+    public boolean linkedHashMapBenchmark() {
+        return linkedHashMap.containsValue(elementCount/DENOMINATOR);
     }
 
     @Benchmark
-    public boolean treeMapBenchmark(MapClass mapClass) {
-        return mapClass.treeMap.containsValue(mapClass.searchElement);
+    public boolean treeMapBenchmark() {
+        return treeMap.containsValue(elementCount/DENOMINATOR);
     }
 }

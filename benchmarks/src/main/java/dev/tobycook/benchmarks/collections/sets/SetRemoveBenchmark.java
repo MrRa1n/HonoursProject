@@ -14,62 +14,51 @@ import org.openjdk.jmh.annotations.Warmup;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
-@BenchmarkMode(Mode.Throughput)
+@State(Scope.Benchmark)
+@BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 5, time = 5)
+@Measurement(iterations = 10, time = 5)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class SetRemoveBenchmark {
 
-    @State(Scope.Benchmark)
-    public static class SetClass {
-        public HashSet<Integer> hashSet;
-        public LinkedHashSet<Integer> linkedHashSet;
-        public TreeSet<Integer> treeSet;
+    Set<Integer> hashSet, linkedHashSet, treeSet;
 
-        @Param({"9","99","999","9999","99999"})
-        public int searchElement;
+    @Param({"1000","100000","1000000"})
+    int elementCount;
 
-        @Param({"10", "100", "1000", "10000", "100000"})
-        public int elementCount;
+    int searchElement;
 
-        @Setup(Level.Invocation)
-        public void setup() {
-            hashSet = new HashSet<>();
-            linkedHashSet = new LinkedHashSet<>();
-            treeSet = new TreeSet<>();
+    @Setup(Level.Invocation)
+    public void setup() {
+        hashSet = new HashSet<>();
+        linkedHashSet = new LinkedHashSet<>();
+        treeSet = new TreeSet<>();
+        searchElement = elementCount / 2;
 
-            for (var i = 0; i < elementCount; i++) {
-                hashSet.add(i);
-                linkedHashSet.add(i);
-                treeSet.add(i);
-            }
+        for (var i = 0; i < elementCount; i++) {
+            hashSet.add(i);
+            linkedHashSet.add(i);
+            treeSet.add(i);
         }
     }
 
+
     @Benchmark
-    public HashSet<Integer> hashSetBenchmark(SetClass setClass) {
-        for (int i = 0; i < setClass.elementCount; i++) {
-            setClass.hashSet.remove(i);
-        }
-        return setClass.hashSet;
+    public boolean hashSetBenchmark() {
+        return hashSet.remove(searchElement);
     }
 
     @Benchmark
-    public LinkedHashSet<Integer> linkedHashSetBenchmark(SetClass setClass) {
-        for (int i = 0; i < setClass.elementCount; i++) {
-            setClass.linkedHashSet.remove(i);
-        }
-        return setClass.linkedHashSet;
+    public boolean linkedHashSetBenchmark() {
+        return linkedHashSet.remove(searchElement);
     }
 
     @Benchmark
-    public TreeSet<Integer> treeSetBenchmark(SetClass setClass) {
-        for (int i = 0; i < setClass.elementCount; i++) {
-            setClass.treeSet.remove(i);
-        }
-        return setClass.treeSet;
+    public boolean treeSetBenchmark() {
+        return treeSet.remove(searchElement);
     }
 }
