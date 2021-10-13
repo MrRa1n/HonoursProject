@@ -1,5 +1,6 @@
 package dev.tobycook.demo.models.person;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,4 +34,19 @@ public class BusinessEntityAddress implements Serializable {
 
     @Column(name = "modifieddate")
     private Timestamp modifieddate;
+
+    @ManyToOne
+    @JoinColumn(name = "businessentityid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private BusinessEntity businessEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "addresstypeid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private AddressType addressType;
+
+    @ManyToOne
+    @JoinColumn(name = "addressid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private Address address;
 }

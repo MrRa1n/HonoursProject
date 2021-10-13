@@ -1,10 +1,13 @@
 package dev.tobycook.demo.models.person;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -39,4 +42,13 @@ public class Address {
 
     @Column(name = "modifieddate")
     private Timestamp modifieddate;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "address")
+    private List<BusinessEntityAddress> businessEntityAddresses;
+
+    @ManyToOne
+    @JoinColumn(name = "stateprovinceid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private StateProvince stateProvince;
 }

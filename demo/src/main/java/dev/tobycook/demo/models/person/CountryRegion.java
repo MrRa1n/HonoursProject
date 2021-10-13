@@ -1,10 +1,13 @@
 package dev.tobycook.demo.models.person;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import dev.tobycook.demo.models.sales.CountryRegionCurrency;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,4 +23,12 @@ public class CountryRegion {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "countryRegion")
+    private List<StateProvince> stateProvinces;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "countryRegion")
+    private List<CountryRegionCurrency> countryRegionCurrencies;
 }
