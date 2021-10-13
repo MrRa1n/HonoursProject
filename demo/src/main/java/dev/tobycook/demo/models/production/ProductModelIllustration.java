@@ -1,5 +1,6 @@
 package dev.tobycook.demo.models.production;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,4 +26,14 @@ public class ProductModelIllustration implements Serializable {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "productmodelid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private ProductModel productModel;
+
+    @ManyToOne
+    @JoinColumn(name = "illustrationid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private Illustration illustration;
 }

@@ -1,10 +1,12 @@
 package dev.tobycook.demo.models.production;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,4 +22,8 @@ public class Culture {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "culture")
+    private List<ProductModelProductDescriptionCulture> productModelProductDescriptionCultures;
 }

@@ -1,5 +1,6 @@
 package dev.tobycook.demo.models.person;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,4 +28,9 @@ public class Password {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "businessentityid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private Person person;
 }

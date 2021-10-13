@@ -2,6 +2,7 @@ package dev.tobycook.demo.models.person;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import dev.tobycook.demo.models.humanresources.Employee;
 import dev.tobycook.demo.models.sales.Customer;
 import lombok.Getter;
 import lombok.Setter;
@@ -73,5 +74,23 @@ public class Person {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "person")
-    private List<BusinessEntityContact> contacts;
+    private List<BusinessEntityContact> businessEntityContacts;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "person")
+    private List<PersonPhone> personPhones;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "person")
+    private List<Password> passwords;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "person")
+    private List<Employee> employees;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "person")
+    private List<EmailAddress> emailAddresses;
+
+
 }

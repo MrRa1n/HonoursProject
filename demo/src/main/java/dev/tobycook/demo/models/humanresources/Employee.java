@@ -1,11 +1,17 @@
 package dev.tobycook.demo.models.humanresources;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import dev.tobycook.demo.models.person.BusinessEntity;
+import dev.tobycook.demo.models.person.Person;
+import dev.tobycook.demo.models.sales.SalesPerson;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -58,4 +64,25 @@ public class Employee {
 
     @Column(name = "organizationnode")
     private String organisationNode;
+
+    @ManyToOne
+    @JoinColumn(name = "businessentityid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private Person person;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "employee")
+    private List<SalesPerson> salesPeople;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "employee")
+    private List<JobCandidate> jobCandidates;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "employee")
+    private List<EmployeePayHistory> employeePayHistory;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "employee")
+    private List<EmployeeDepartmentHistory> employeeDepartmentHistory;
 }

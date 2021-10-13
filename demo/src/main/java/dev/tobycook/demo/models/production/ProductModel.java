@@ -1,10 +1,12 @@
 package dev.tobycook.demo.models.production;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -30,4 +32,16 @@ public class ProductModel {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "productModel")
+    private List<Product> products;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "productModel")
+    private List<ProductModelIllustration> productModelIllustrations;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "productModel")
+    private List<ProductModelProductDescriptionCulture> productModelProductDescriptionCultures;
 }

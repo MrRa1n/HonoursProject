@@ -1,5 +1,6 @@
 package dev.tobycook.demo.models.production;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,4 +36,9 @@ public class ProductReview {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "productid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private Product product;
 }

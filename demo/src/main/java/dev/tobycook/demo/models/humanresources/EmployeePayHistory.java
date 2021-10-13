@@ -1,5 +1,6 @@
 package dev.tobycook.demo.models.humanresources;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,4 +32,9 @@ public class EmployeePayHistory implements Serializable {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "businessentityid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private Employee employee;
 }

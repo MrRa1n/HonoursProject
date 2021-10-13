@@ -1,5 +1,6 @@
 package dev.tobycook.demo.models.humanresources;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,5 +38,20 @@ public class EmployeeDepartmentHistory implements Serializable {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "businessentityid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "shiftid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private Shift shift;
+
+    @ManyToOne
+    @JoinColumn(name = "departmentid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private Department department;
 
 }

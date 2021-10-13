@@ -1,5 +1,8 @@
 package dev.tobycook.demo.models.sales;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import dev.tobycook.demo.models.humanresources.Employee;
+import dev.tobycook.demo.models.person.Person;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,4 +42,9 @@ public class SalesPerson {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "businessentityid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private Employee employee;
 }

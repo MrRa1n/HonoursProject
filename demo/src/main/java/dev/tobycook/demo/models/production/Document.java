@@ -1,10 +1,12 @@
 package dev.tobycook.demo.models.production;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -51,4 +53,8 @@ public class Document {
     @Id
     @Column(name = "documentnode")
     private String documentNode;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "document")
+    private List<ProductDocument> productDocuments;
 }

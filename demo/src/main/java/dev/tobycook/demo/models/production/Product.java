@@ -1,10 +1,19 @@
 package dev.tobycook.demo.models.production;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -47,10 +56,10 @@ public class Product {
     private String size;
 
     @Column(name = "sizeunitmeasurecode")
-    private Character[] sizeUnitMeasureCode;
+    private String sizeUnitMeasureCode;
 
     @Column(name = "weightunitmeasurecode")
-    private Character[] weightUnitMeasureCode;
+    private String weightUnitMeasureCode;
 
     @Column(name = "weight")
     private Double weight;
@@ -59,13 +68,13 @@ public class Product {
     private Integer daysToManufacture;
 
     @Column(name = "productline")
-    private Character[] productLine;
+    private String productLine;
 
     @Column(name = "class")
-    private Character[] productClass;
+    private String productClass;
 
     @Column(name = "style")
-    private Character[] style;
+    private String style;
 
     @Column(name = "productsubcategoryid")
     private Integer subcategoryId;
@@ -87,4 +96,36 @@ public class Product {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "productmodelid", insertable = false, updatable = false)
+    @JsonBackReference
+    private ProductModel productModel;
+
+    @ManyToOne
+    @JoinColumn(name = "productsubcategoryid", insertable = false, updatable = false)
+    @JsonBackReference
+    private ProductSubcategory productSubcategory;
+
+    @ManyToOne
+    @JoinColumn(name = "sizeunitmeasurecode", insertable = false, updatable = false)
+    @JsonBackReference
+    private UnitMeasure sizeUnitMeasure;
+
+    @ManyToOne
+    @JoinColumn(name = "weightunitmeasurecode", insertable = false, updatable = false)
+    @JsonBackReference
+    private UnitMeasure weightUnitMeasure;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private List<ProductDocument> productDocuments;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private List<ProductReview> productReviews;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private List<ProductProductPhoto> productProductPhoto;
 }
