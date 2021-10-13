@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -11,7 +12,10 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(schema = "sales", name = "salesorderdetail")
-public class SalesOrderDetail {
+public class SalesOrderDetail implements Serializable {
+
+    private static final long serialVersionUID = -4691648415487314992L;
+
     @Id
     @Column(name = "salesorderid")
     private Integer salesOrderId;

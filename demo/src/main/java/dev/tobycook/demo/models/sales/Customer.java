@@ -1,5 +1,7 @@
 package dev.tobycook.demo.models.sales;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import dev.tobycook.demo.models.person.Person;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +18,7 @@ public class Customer {
     @Column(name = "customerid")
     private Integer id;
 
+    // can maybe drop this?
     @Column(name = "personid")
     private Integer personId;
 
@@ -30,4 +33,14 @@ public class Customer {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "storeid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private Store store;
+
+    @ManyToOne
+    @JoinColumn(name = "personid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private Person person;
 }
