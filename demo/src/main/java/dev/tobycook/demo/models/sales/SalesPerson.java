@@ -1,13 +1,20 @@
 package dev.tobycook.demo.models.sales;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import dev.tobycook.demo.models.humanresources.Employee;
-import dev.tobycook.demo.models.person.Person;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -47,4 +54,21 @@ public class SalesPerson {
     @JoinColumn(name = "businessentityid", insertable = false, updatable = false, nullable = false)
     @JsonBackReference
     private Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "territoryid", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private SalesTerritory salesTerritory;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "salesPerson")
+    private List<SalesTerritoryHistory> salesTerritoryHistory;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "salesPerson")
+    private List<SalesOrderHeader> salesOrderHeaders;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "salesPerson")
+    private List<SalesPersonQuotaHistory> salesPersonQuotaHistory;
 }

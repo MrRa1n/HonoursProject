@@ -1,9 +1,15 @@
 package dev.tobycook.demo.models.production;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -53,4 +59,14 @@ public class WorkOrderRouting implements Serializable {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "workorderid", insertable = false, updatable = false)
+    @JsonBackReference
+    private WorkOrder workOrder;
+
+    @ManyToOne
+    @JoinColumn(name = "locationid", insertable = false, updatable = false)
+    @JsonBackReference
+    private Location location;
 }

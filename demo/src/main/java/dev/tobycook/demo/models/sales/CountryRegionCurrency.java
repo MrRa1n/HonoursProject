@@ -37,4 +37,9 @@ public class CountryRegionCurrency implements Serializable {
     @JoinColumn(name = "countryregioncode", insertable = false, updatable = false, nullable = false)
     @JsonBackReference
     private CountryRegion countryRegion;
+
+    @ManyToOne
+    @JoinColumn(name = "currencycode", insertable = false, updatable = false, nullable = false)
+    @JsonBackReference
+    private Currency currency;
 }

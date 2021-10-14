@@ -2,6 +2,10 @@ package dev.tobycook.demo.models.production;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import dev.tobycook.demo.models.purchasing.PurchaseOrderDetail;
+import dev.tobycook.demo.models.sales.SalesOrderDetail;
+import dev.tobycook.demo.models.sales.ShoppingCartItem;
+import dev.tobycook.demo.models.sales.SpecialOfferProduct;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -128,4 +132,48 @@ public class Product {
     @JsonManagedReference
     @OneToMany(mappedBy = "product")
     private List<ProductProductPhoto> productProductPhoto;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private List<WorkOrder> workOrders;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private List<TransactionHistory> transactionHistory;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private List<TransactionHistoryArchive> transactionHistoryArchive;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private List<ProductCostHistory> productCostHistory;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "productAssembly")
+    private List<BillOfMaterials> productAssemblies;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "component")
+    private List<BillOfMaterials> components;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private List<PurchaseOrderDetail> purchaseOrderDetails;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private List<ProductInventory> productInventory;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private List<SalesOrderDetail> salesOrderDetails;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private List<SpecialOfferProduct> specialOfferProducts;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private List<ShoppingCartItem> shoppingCartItems;
 }

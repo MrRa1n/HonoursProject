@@ -1,10 +1,19 @@
 package dev.tobycook.demo.models.sales;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -87,4 +96,37 @@ public class SalesOrderHeader {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "customerid", insertable = false, updatable = false)
+    @JsonBackReference
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "creditcardid", insertable = false, updatable = false)
+    @JsonBackReference
+    private CreditCard creditCard;
+
+    @ManyToOne
+    @JoinColumn(name = "currencyrateid", insertable = false, updatable = false)
+    @JsonBackReference
+    private CurrencyRate currencyRate;
+
+    @ManyToOne
+    @JoinColumn(name = "salespersonid", insertable = false, updatable = false)
+    @JsonBackReference
+    private SalesPerson salesPerson;
+
+    @ManyToOne
+    @JoinColumn(name = "territoryid", insertable = false, updatable = false)
+    @JsonBackReference
+    private SalesTerritory salesTerritory;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "salesOrderHeader")
+    private List<SalesOrderHeaderSalesReason> salesOrderHeaderSalesReasons;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "salesOrderHeader")
+    private List<SalesOrderDetail> salesOrderDetails;
 }

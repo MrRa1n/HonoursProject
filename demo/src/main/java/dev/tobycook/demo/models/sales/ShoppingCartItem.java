@@ -1,9 +1,16 @@
 package dev.tobycook.demo.models.sales;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import dev.tobycook.demo.models.production.Product;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 
 @Getter
@@ -29,4 +36,9 @@ public class ShoppingCartItem {
 
     @Column(name = "modifieddate")
     private Timestamp modifiedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "productid", insertable = false, updatable = false)
+    @JsonBackReference
+    private Product product;
 }
