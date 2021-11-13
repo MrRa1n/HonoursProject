@@ -10,6 +10,6 @@ public class PersonFinaliser {
 
     @Override
     protected void finalize() throws Throwable {
-        age++;
+        super.finalize();
     }
 }

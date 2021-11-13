@@ -1,39 +1,21 @@
 package dev.tobycook.benchmarks.collections.sets;
 
+import dev.tobycook.benchmarks.helpers.BaseBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.Warmup;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.TimeUnit;
 
-@State(Scope.Benchmark)
-@BenchmarkMode(Mode.AverageTime)
-@Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 10, time = 5)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
-public class SetAddBenchmark {
+public class SetAddBenchmark extends BaseBenchmark {
 
-    static final int NUMBER = 123;
+    private int number = 123;
+    private Set<Integer> hashSet, linkedHashSet, treeSet;
 
-    // TODO: Add experiments for loadFactor and initialCapacity
-    Set<Integer> hashSet, linkedHashSet, treeSet;
-
-    @Param({"1000","100000","1000000"})
-    public int elementCount;
-
-    @Setup(Level.Trial)
+    @Setup(Level.Iteration)
     public void setup() {
         hashSet = new HashSet<>();
         linkedHashSet = new LinkedHashSet<>();
@@ -42,16 +24,16 @@ public class SetAddBenchmark {
 
     @Benchmark
     public boolean hashSetBenchmark() {
-        return hashSet.add(NUMBER);
+        return hashSet.add(number);
     }
 
     @Benchmark
     public boolean linkedHashSetBenchmark() {
-         return linkedHashSet.add(NUMBER);
+         return linkedHashSet.add(number);
     }
 
     @Benchmark
     public boolean treeSetBenchmark() {
-        return treeSet.add(NUMBER);
+        return treeSet.add(number);
     }
 }

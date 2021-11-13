@@ -1,49 +1,30 @@
 package dev.tobycook.benchmarks.collections.maps;
 
+import dev.tobycook.benchmarks.helpers.BaseBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.Warmup;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
-import java.util.concurrent.TimeUnit;
 
-@State(Scope.Benchmark)
-@BenchmarkMode(Mode.AverageTime)
-@Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 10, time = 5)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
-public class MapPutBenchmark {
+public class MapPutBenchmark extends BaseBenchmark {
 
+    private Random rnd = new Random();
+    private String key;
+    private int value = 123456789;
+    private Map<String, Integer> hashMap, linkedHashMap, treeMap;
 
-    @Param({"1000","100000","1000000"})
-    public int elementCount;
-
-    Map<String, Integer> hashMap, linkedHashMap, treeMap;
-
-    String key;
-    int value;
-
-    @Setup(Level.Invocation)
+    @Setup(Level.Iteration)
     public void setup() {
+        key = "key" + rnd.nextInt(100_000);
         hashMap = new HashMap<>();
         linkedHashMap = new LinkedHashMap<>();
         treeMap = new TreeMap<>();
-        key = "key" + elementCount / 2;
-        value = 0;
     }
-
-    // TODO: Add benchmarks with varying loadFactor and initialCapacity
 
     @Benchmark
     public Integer hashMapBenchmark() {

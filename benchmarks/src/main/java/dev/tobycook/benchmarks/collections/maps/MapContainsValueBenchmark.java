@@ -1,35 +1,20 @@
 package dev.tobycook.benchmarks.collections.maps;
 
+import dev.tobycook.benchmarks.helpers.BaseBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.Warmup;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.TimeUnit;
 
-@State(Scope.Benchmark)
-@BenchmarkMode(Mode.AverageTime)
-@Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 10, time = 5)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
-public class MapContainsValueBenchmark {
+public class MapContainsValueBenchmark extends BaseBenchmark {
 
-    @Param({"1000","100000","1000000"})
-    public int elementCount;
-    static final int DENOMINATOR = 2;
-
-    Map<String, Integer> hashMap, linkedHashMap, treeMap;
+    private int elementCount = 100_000;
+    private int denominator = 2;
+    private Map<String, Integer> hashMap, linkedHashMap, treeMap;
 
     @Setup(Level.Trial)
     public void setup() {
@@ -44,19 +29,18 @@ public class MapContainsValueBenchmark {
         }
     }
 
-
     @Benchmark
     public boolean hashMapBenchmark() {
-        return hashMap.containsValue(elementCount/DENOMINATOR);
+        return hashMap.containsValue(elementCount/denominator);
     }
 
     @Benchmark
     public boolean linkedHashMapBenchmark() {
-        return linkedHashMap.containsValue(elementCount/DENOMINATOR);
+        return linkedHashMap.containsValue(elementCount/denominator);
     }
 
     @Benchmark
     public boolean treeMapBenchmark() {
-        return treeMap.containsValue(elementCount/DENOMINATOR);
+        return treeMap.containsValue(elementCount/denominator);
     }
 }

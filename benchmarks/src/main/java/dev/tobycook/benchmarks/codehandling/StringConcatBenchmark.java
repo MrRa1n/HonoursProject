@@ -1,14 +1,8 @@
 package dev.tobycook.benchmarks.codehandling;
 
+import dev.tobycook.benchmarks.helpers.BaseBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.Warmup;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,17 +14,11 @@ import java.util.concurrent.TimeUnit;
  * @author Toby Cook
  *
  */
-@State(Scope.Benchmark)
-@BenchmarkMode(Mode.Throughput)
-@Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 10, time = 5)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
-public class StringConcatBenchmark {
+@OutputTimeUnit(TimeUnit.SECONDS)
+public class StringConcatBenchmark extends BaseBenchmark {
 
-    final String stringValue = "Hello, world!";
-
-    @Param({"1000","10000","100000"})
-    public int iterations;
+    private String stringValue = "Hello, world!";
+    private int iterations = 100_000;
 
     @Benchmark
     public String stringConcatenationBenchmark() {

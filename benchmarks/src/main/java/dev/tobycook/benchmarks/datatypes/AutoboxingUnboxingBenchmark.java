@@ -1,28 +1,15 @@
 package dev.tobycook.benchmarks.datatypes;
 
+import dev.tobycook.benchmarks.helpers.BaseBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-@State(Scope.Benchmark)
-@BenchmarkMode(Mode.Throughput)
-@Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 10, time = 5)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
-public class AutoboxingUnboxingBenchmark {
+public class AutoboxingUnboxingBenchmark extends BaseBenchmark {
 
     public int[] primitivesArr;
     public List<Integer> boxedPrimitivesList;
@@ -30,13 +17,12 @@ public class AutoboxingUnboxingBenchmark {
     public int[] emptyPrimitivesArr;
     public List<Integer> emptyBoxedPrimitivesList;
 
-    @Param({"1000","100000","1000000"})
-    public int iterations;
+    private int iterations = 100_000;
 
-    static final int UNBOXED_INT = 123;
-    static final Integer BOXED_INT = 123;
+    private int unboxedInt = 123;
+    private Integer boxedInt = 123;
 
-    @Setup(Level.Invocation)
+    @Setup(Level.Iteration)
     public void setup() {
         primitivesArr = new int[iterations];
         boxedPrimitivesList = new ArrayList<>();
@@ -64,12 +50,12 @@ public class AutoboxingUnboxingBenchmark {
 
     @Benchmark
     public boolean primitiveIntegerAddBenchmark() {
-        return emptyBoxedPrimitivesList.add(UNBOXED_INT);
+        return emptyBoxedPrimitivesList.add(unboxedInt);
     }
 
     @Benchmark
     public boolean boxedPrimitiveAddBenchmark() {
-        return emptyBoxedPrimitivesList.add(BOXED_INT);
+        return emptyBoxedPrimitivesList.add(boxedInt);
     }
 
 

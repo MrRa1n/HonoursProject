@@ -1,38 +1,28 @@
 package dev.tobycook.benchmarks.codehandling;
 
+import dev.tobycook.benchmarks.helpers.BaseBenchmark;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.LongAdder;
 
-@State(Scope.Benchmark)
 @BenchmarkMode(Mode.AverageTime)
-@Warmup(iterations = 5, time = 5)
-@Measurement(iterations = 10, time = 5)
-@OutputTimeUnit(TimeUnit.NANOSECONDS)
-public class LoopBenchmark {
+public class LoopBenchmark extends BaseBenchmark {
 
-    List<Integer> data;
-
-    @Param({"1000","100000","1000000"})
-    public int iterations;
+    private List<Integer> data;
+    private LongAdder sum;
+    private int iterations = 100_000;
 
     @Setup(Level.Trial)
     public void setup() {
         data = new ArrayList<>();
+        sum = new LongAdder();
         for (int i = 0; i < iterations; i++) {
             data.add(i);
         }
@@ -67,10 +57,10 @@ public class LoopBenchmark {
         return number;
     }
 
+
     @Benchmark
     public int streamForEachBenchmark() {
-        var number = new AtomicInteger();
-        data.stream().forEach(number::set);
-        return number.get();
+        data.stream().forEach(sum::add);
+        return sum.intValue();
     }
 }
